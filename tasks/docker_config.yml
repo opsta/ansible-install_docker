@@ -16,7 +16,7 @@
       dest: /etc/default/docker
       state: present
       regexp: '^DOCKER_OPTS\='
-      line: DOCKER_OPTS="{{ install_docker_options }}"
+      line: "DOCKER_OPTS={{ install_docker_options }}"
     when: |
       ansible_distribution == 'Ubuntu' and
       ansible_distribution_release == 'trusty' and
@@ -28,7 +28,7 @@
       dest: /lib/systemd/system/docker.service
       state: present
       regexp: '^ExecStart\='
-      line: ExecStart=/usr/bin/docker daemon -H fd:// "{{ install_docker_options }}"
+      line: "ExecStart=/usr/bin/docker daemon -H fd:// {{ install_docker_options }}"
     when: |
       ansible_distribution == 'Ubuntu' and
       ansible_distribution_release == 'xenial' and

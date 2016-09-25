@@ -1,5 +1,5 @@
 ---
-install_docker_options: --live-restore --storage-driver=overlay2
+install_docker_options: --live-restore --storage-driver overlay2
 
 install_docker_private_login: false
 #install_docker_registry_username: registry

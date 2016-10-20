@@ -19,21 +19,10 @@
       line: "DOCKER_OPTS={{ install_docker_options }}"
     when: |
       ansible_distribution == 'Ubuntu' and
-      ansible_distribution_release == 'trusty' and
-      install_docker.changed
+      (install_docker.changed or
+      install_docker_package_check.changed)
     register: install_docker_config_options
 
-  - name: Configure Docker configuration for Ubuntu Xenial
-    lineinfile:
-      dest: /lib/systemd/system/docker.service
-      state: present
-      regexp: '^ExecStart\='
-      line: "ExecStart=/usr/bin/docker daemon -H fd:// {{ install_docker_options }}"
-    when: |
-      ansible_distribution == 'Ubuntu' and
-      ansible_distribution_release == 'xenial' and
-      install_docker.changed
-    register: install_docker_config_options
 
   - name: Restart Docker Service
     service:

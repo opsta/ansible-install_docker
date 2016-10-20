@@ -20,7 +20,7 @@ Role Variables
 
 ```yaml
 # This is default variables
-install_docker_option: --storage-driver=overlay
+install_docker_options: --storage-driver=overlay
 install_docker_private_login: false
 install_docker_py: false
 

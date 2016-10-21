@@ -43,6 +43,15 @@
       name: docker
       state: restarted
     when: install_docker_config_options.changed
+    
+  - name: Reload daemon and Restart Docker Service for systemd
+    systemd:
+    name: docker.service
+    daemon_reload: yes
+    state: restarted
+    when: |
+      install_docker_config_options.changed and
+      ansible_distribution_release == 'xenial'
 
   tags:
     - install-docker-configure

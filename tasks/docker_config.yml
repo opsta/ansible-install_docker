@@ -48,7 +48,6 @@
     systemd:
       name: docker
       daemon_reload: yes
-      state: restarted
     when: |
       ansible_distribution == 'Ubuntu' and
       ansible_distribution_release == 'xenial' and

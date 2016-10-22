@@ -44,7 +44,7 @@
       state: restarted
     when: install_docker_config_options.changed
 
-  - name: Reload daemon and Restart Docker Service for systemd
+  - name: Reload daemon when service configuration was changed
     systemd:
       name: docker
       daemon_reload: yes

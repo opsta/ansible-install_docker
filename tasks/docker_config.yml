@@ -5,11 +5,13 @@
       name: "{{ ansible_user }}"
       groups: docker
       append: yes
+    register: install_docker_add_remote_user
 
   - name: Kill SSH to active new group that just added
     shell: sleep 1; pkill -u {{ ansible_ssh_user }} sshd
     async: 3
     poll: 2
+    when: install_docker_add_remote_user.changed
 
   - name: Configure Docker configuration for Ubuntu Trusty
     lineinfile:
@@ -19,8 +21,7 @@
       line: "DOCKER_OPTS={{ install_docker_options }}"
     when: |
       ansible_distribution == 'Ubuntu' and
-      ansible_distribution_release == 'trusty' and
-      install_docker.changed
+      ansible_distribution_release == 'trusty'
     register: install_docker_config_options
 
   - name: Configure Docker configuration for Ubuntu Xenial
@@ -31,11 +32,20 @@
       line: "ExecStart=/usr/bin/docker daemon -H fd:// {{ install_docker_options }}"
     when: |
       ansible_distribution == 'Ubuntu' and
-      ansible_distribution_release == 'xenial' and
-      install_docker.changed
+      ansible_distribution_release == 'xenial'
     register: install_docker_config_options
 
-  - name: Restart Docker Service
+  - name: Restart Docker Service (systemd)
+    systemd:
+      daemon_reload: yes
+      name: docker
+      state: restarted  
+    when: |
+      ansible_distribution == 'Ubuntu' and
+      ansible_distribution_release == 'xenial' and
+      install_docker_config_options.changed
+
+  - name: Restart Docker Service (service)
     service:
       name: docker
       state: restarted
@@ -55,3 +65,4 @@
   when: install_docker_private_login
   tags:
     - install-docker-private-login
+

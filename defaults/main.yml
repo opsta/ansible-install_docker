@@ -8,3 +8,10 @@ install_docker_private_login: false
 #install_docker_registry_url: registry.example.com
 
 install_docker_py: false
+
+# Used for RedHat/CentOS/Fedora.
+docker_repo_url: https://download.docker.com/linux
+docker_yum_repo_url: "{{ docker_repo_url }}/{{ (ansible_distribution == 'Fedora') | ternary('fedora','centos') }}/docker-ce.repo"
+docker_yum_repo_enable_nightly: '0'
+docker_yum_repo_enable_test: '0'
+docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"

@@ -30,6 +30,13 @@ install_docker_registry_username: registry
 install_docker_registry_password: CHANGEDOCKERPASSWORDHERE
 install_docker_registry_email: docker@example.com
 install_docker_registry_url: registry.example.com
+
+# Used for RedHat/CentOS/Fedora.
+install_docker_repo_url: https://download.docker.com/linux
+install_docker_yum_repo_url: "{{ install_docker_repo_url }}/{{ (ansible_distribution == 'Fedora') | ternary('fedora','centos') }}/docker-ce.repo"
+install_docker_yum_repo_enable_nightly: '0'
+install_docker_yum_repo_enable_test: '0'
+install_docker_yum_gpg_key: "{{ install_docker_repo_url }}/{{ (ansible_distribution == 'Fedora') | ternary('fedora','centos') }}/gpg"
 ```
 
 Dependencies

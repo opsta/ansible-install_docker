@@ -9,8 +9,8 @@ install_docker_private_login: false
 
 install_docker_py: false
 
-install_docker_dependencies: []
-  # - python-setuptools
+install_docker_dependencies:
+  - python-setuptools
   # - epel-release
 
 # Used for RedHat/CentOS/Fedora.

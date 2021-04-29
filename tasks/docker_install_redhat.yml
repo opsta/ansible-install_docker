@@ -1,0 +1,38 @@
+---
+- block:
+  - name: Add Docker GPG key.
+    rpm_key:
+      key: "{{ install_docker_yum_gpg_key }}"
+      state: present
+
+  - name: Add Docker repository.
+    get_url:
+      url: "{{ install_docker_yum_repo_url }}"
+      dest: '/etc/yum.repos.d/docker-ce.repo'
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Install Docker.
+    package:
+      name: docker-ce
+      state: latest
+    when: install_docker_package_check.rc != 0
+    register: install_docker
+
+  - name: Start Docker service
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  # Install docker-py dependency
+  - name: Install dependency
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "{{ install_docker_dependencies }}"
+  
+  tags:
+    - install-docker

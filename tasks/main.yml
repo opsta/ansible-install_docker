@@ -1,5 +1,8 @@
 ---
 - include: docker_install.yml
+
+- include: docker_install_redhat.yml
+  when: ansible_os_family == 'RedHat'
+
 - include: docker_config.yml
-- include: docker_py_dependency.yml
 - include: docker_py_install.yml

@@ -7,8 +7,10 @@
     when: install_docker_py
     register: install_docker_pip_is_installed
 
-  - name: Install pip if not installed
-    shell: curl https://bootstrap.pypa.io/get-pip.py | python
+  - name: Install pip
+    package:
+      name: "{{ 'python-pip' if ansible_python.version.major == 2 else 'python3-pip' }}"
+      state: latest
     when: install_docker_py and install_docker_pip_is_installed.rc != 0
 
   - name: Install docker-py

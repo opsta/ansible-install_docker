@@ -1,8 +1,15 @@
 ---
 - include: docker_install.yml
+  tags: install-docker
 
 - include: docker_install_redhat.yml
   when: ansible_os_family == 'RedHat'
+  tags: install-docker
 
 - include: docker_config.yml
+  tags: 
+    - install-docker-configure
+    - install-docker-private-login
+  
 - include: docker_py_install.yml
+  tags: install-docker-py

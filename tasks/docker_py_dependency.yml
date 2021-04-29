@@ -1,0 +1,9 @@
+---
+- block: # Install docker-py dependency
+  - name: Install dependency
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "{{ install_docker_dependencies }}"
+  when: ansible_os_family == 'RedHat'

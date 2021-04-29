@@ -11,7 +11,7 @@ install_docker_py: false
 
 install_docker_dependencies:
   - python-setuptools
-  # - epel-release
+  - epel-release
 
 # Used for RedHat/CentOS/Fedora.
 install_docker_repo_url: https://download.docker.com/linux

@@ -1,12 +1,5 @@
 ---
 - block: # Install docker-py
-  - name: Install dependency
-    package:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - "{{ install_docker_dependencies }}"
-  
   - name: Check to see if pip is already installed.
     command: pip --version
     ignore_errors: true
